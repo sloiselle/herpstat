@@ -1,0 +1,39 @@
+.signIn {
+	width: 100%;
+	background: white;
+	color: black;
+	margin: 20px auto;
+	&,
+	&-header {
+		border-radius: 3px;
+	}
+	&-header {
+		background: #dadada;
+		text-align: left;
+		font-size: 14px;
+		padding: 10px 15px;
+	}
+	&-error {
+		color: red;
+		padding: 16px;
+	}
+	&-form {
+		min-width: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    &-group {
+    	padding: 10px 20px;
+    }
+    &-input {
+    	width: 100%;
+    	padding: 16px;
+    }
+    &-select {
+			background: transparent;
+			// font-size: 14px;
+			width: 100%;
+			height: 29px;
+    }
+	}
+}

@@ -1,0 +1,21 @@
+.stats {
+	color: black;
+	padding: 20px auto;
+	width: 75%;
+	&-row {
+		&,
+		&-header {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-around;
+			background: #dadada;
+			padding: 8px;
+		}
+		&:nth-child(even) {
+			background: $activeColor;
+		}
+	}
+	&-column {
+		width: 25%;
+	}
+}
