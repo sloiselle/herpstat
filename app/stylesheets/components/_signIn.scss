@@ -1,5 +1,9 @@
 .signIn {
-	width: 100%;
+	width: 75%;
+	@media (max-width: 969px) {
+		width: 90%;
+	}
+	max-width: 500px;
 	background: white;
 	color: black;
 	margin: 20px auto;
@@ -15,12 +19,12 @@
 	}
 	&-error {
 		color: red;
-		padding: 16px;
+		padding: 0 16px;
 	}
 	&-form {
 		min-width: 0;
     padding: 0;
-    margin: 0;
+    margin: 10px 0;
     border: 0;
     &-group {
     	padding: 10px 20px;
@@ -28,12 +32,35 @@
     &-input {
     	width: 100%;
     	padding: 16px;
+    	border: 1px #dadada solid;
+    	border-radius: 3px;
+    	&:focus {
+				outline: none;
+			}
     }
     &-select {
-			background: transparent;
-			// font-size: 14px;
+    	&-wrapper {
+    		border: 1px #dadada solid;
+    		border-radius: 3px;
+    		overflow: hidden;
+    		width: 100%;
+    		padding: 10px;
+    		background: #ffffff url("https://image.flaticon.com/icons/svg/25/25243.svg") no-repeat 95% 50%;
+    		background-size: 10px 10px;
+    	}
+			padding: 5px 8px;
 			width: 100%;
-			height: 29px;
+			border: none;
+			box-shadow: none;
+			background: transparent;
+			background-image: none;
+			-webkit-appearance: none;
+			&:focus {
+				outline: none;
+			}
+    }
+    &-button {
+    	padding: 10px 20px 20px;
     }
 	}
 }

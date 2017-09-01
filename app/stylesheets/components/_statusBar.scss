@@ -4,7 +4,12 @@
 	color: black;
 	padding: 20px auto;
 	position: fixed;
-	top: 0;
+	@media (max-width: 968px) {
+		bottom: 0;
+	}
+	@media (min-width: 969px) {
+		top: 0;
+	}
 	left: 0;
 	right: 0;
 	display: flex;

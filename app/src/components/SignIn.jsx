@@ -34,20 +34,22 @@ export default class SignIn extends Component {
             />
           </div>
           <div className="signIn-form-group">
-            <select
-              placeholder="Security"
-              className="signIn-form-select"
-              name="security"
-              value={securityOption}
-              onChange={(e) => handleSecurityOptionChange(e)}
-            >
-              <option value="None">None</option>
-              <option value="WEP">WEP</option>
-              <option value="WPA/WPA2 Personal">WPA/WPA2 Personal</option>
-              <option value="WPA2 Personal">WPA2 Personal</option>
-            </select>
+            <div className="signIn-form-select-wrapper">
+              <select
+                placeholder="Security"
+                className="signIn-form-select"
+                name="security"
+                value={securityOption}
+                onChange={(e) => handleSecurityOptionChange(e)}
+              >
+                <option value="None">None</option>
+                <option value="WEP">WEP</option>
+                <option value="WPA/WPA2 Personal">WPA/WPA2 Personal</option>
+                <option value="WPA2 Personal">WPA2 Personal</option>
+              </select>
+            </div>
           </div>
-          {securityOption !== 'None' &&
+          {securityOption !== 'None' && securityOption !== null &&
             <div className="signIn-form-group">
               <input
                 placeholder="Password"
@@ -59,7 +61,7 @@ export default class SignIn extends Component {
               />
             </div>
           }
-          <div className="signIn-form-group">
+          <div className='signIn-form-button'>
             <Button text="Connect" onClick={submitWiFiInfo} />
           </div>
         </fieldset>

@@ -2,6 +2,9 @@
 	color: black;
 	padding: 20px auto;
 	width: 75%;
+	@media (max-width: 969px) {
+		width: 90%;
+	}
 	cursor: pointer;
 	&-row {
 		&,
@@ -12,8 +15,16 @@
 			background: #dadada;
 			padding: 8px;
 		}
+		&-header{
+			border-top-left-radius: 3px;
+			border-top-right-radius: 3px;
+		}
 		&:nth-child(even) {
 			background: $activeColor;
+		}
+		&:last-child {
+			border-bottom-left-radius: 3px;
+			border-bottom-right-radius: 3px;
 		}
 	}
 	&-column {

@@ -2,8 +2,11 @@
 	@include hacks();
 	position: relative;
 	width: 100px;
-	height: 30px;
-	line-height: 30px;
+	@media (max-width: 969px) {
+		width: 100%;
+	}
+	height: 50px;
+	line-height: 50px;
 	color: white;
 	text-align: center;
 	vertical-align: middle;

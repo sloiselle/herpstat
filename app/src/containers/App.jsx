@@ -10,7 +10,7 @@ export default class App extends Component {
     this.state = {
       isConnected: false,
       networkName: null,
-      securityOption: 'None',
+      securityOption: null,
       password: null,
       showErrors: false,
       timeUntilRefresh: 0,
@@ -24,7 +24,7 @@ export default class App extends Component {
   }
 
   submitWiFiInfo = () => {
-    if (this.state.networkName === null || (this.state.securityOption !== 'None' && !this.state.password)) {
+    if (this.state.networkName === null || (this.state.securityOption !== 'None' && this.state.securityOption !== null && !this.state.password)) {
       this.setState({showErrors: true})
     } else {
       // TODO Insert POST here
@@ -76,7 +76,7 @@ export default class App extends Component {
           timeUntilRefresh={this.state.timeUntilRefresh}
         />
         {!this.state.isConnected &&
-          <div style={{width: '500px'}}>
+          <div style={{width: '100%'}}>
             <Logo />
             <SignIn
               showErrors={this.state.showErrors}
