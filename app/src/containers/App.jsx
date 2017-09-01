@@ -44,11 +44,13 @@ export default class App extends Component {
   }
 
   refreshInfo = () => {
-    if(this.state.timeUntilRefresh > 1) {
-      this.setState({timeUntilRefresh: this.state.timeUntilRefresh - 1})
-    } else {
-      this.getInfo();
-      this.setState({timeUntilRefresh: this.state.refreshDelay});
+    if (this.state.isConnected) {
+      if (this.state.timeUntilRefresh > 1) {
+        this.setState({timeUntilRefresh: this.state.timeUntilRefresh - 1})
+      } else {
+        this.getInfo();
+        this.setState({timeUntilRefresh: this.state.refreshDelay});
+      }
     }
     setTimeout(() => this.refreshInfo(), 1000);
   }

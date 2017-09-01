@@ -33,7 +33,7 @@ export default class Stats extends Component {
     this.setState({showTemperatureInCelsius: !this.state.showTemperatureInCelsius});
   }
 
-  convertToCelsius = (temp) => ((temp - 32)/1.8).toFixed(2); 
+  convertToCelsius = (temp) => ((temp - 32)/1.8); 
 
   render() {
     let tempSymbol = this.state.showTemperatureInCelsius ? '\xB0C' : '\xB0F';
@@ -41,9 +41,9 @@ export default class Stats extends Component {
       <div className='stats' onClick={this.toggleCelsius}>
         <div className='stats-row-header'>
           <p className='stats-column'>PROBE ID</p>
-          <p className='stats-column'>CURRENT TEMP({tempSymbol})</p>
-          <p className='stats-column'>SET TEMP({tempSymbol})</p>
-          <p className='stats-column'>POWER%</p>
+          <p className='stats-column'>CURRENT TEMP ({tempSymbol})</p>
+          <p className='stats-column'>SET TEMP ({tempSymbol})</p>
+          <p className='stats-column'>POWER %</p>
         </div>
         {this.state.herpStats.map(stat => {
           const currentTemp = this.state.showTemperatureInCelsius ? this.convertToCelsius(stat.currentTemp) : stat.currentTemp;
@@ -51,8 +51,8 @@ export default class Stats extends Component {
           return (
               <div className='stats-row' key={stat.probeId}>
                 <p className='stats-column'>#{stat.probeId}</p>
-                <p className='stats-column'>{currentTemp}{tempSymbol}</p>
-                <p className='stats-column'>({setTemp}{tempSymbol})</p>
+                <p className='stats-column'>{currentTemp.toFixed(1)}{tempSymbol}</p>
+                <p className='stats-column'>({setTemp.toFixed(1)}{tempSymbol})</p>
                 <p className='stats-column'>{stat.powerPercentage}%</p>
               </div>
             )
