@@ -1,9 +1,9 @@
 .stats {
 	color: black;
-	padding: 20px auto;
-	width: 75%;
+	padding: 20px 0;
+	width: 100%;
 	@media (max-width: 969px) {
-		width: 90%;
+		width: 95%;
 	}
 	cursor: pointer;
 	&-row {
@@ -28,6 +28,9 @@
 		}
 	}
 	&-column {
-		width: 25%;
+		width: 20%;
+		&-copy {
+			padding-top: 20px;
+		}
 	}
 }

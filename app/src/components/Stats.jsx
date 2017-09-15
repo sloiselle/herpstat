@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from './../components/Button.jsx';
 
 export default class Stats extends Component {
   constructor(props) {
@@ -7,12 +8,14 @@ export default class Stats extends Component {
       showTemperatureInCelsius: false,
       herpStats: [
         {
+          powerStatus: 'On',
           probeId: 1,
           currentTemp: 70,
           setTemp: 45.5,
           powerPercentage: 100
         },
         {
+          powerStatus: 'Off',
           probeId: 2,
           currentTemp: 55,
           setTemp: 45.5,
@@ -38,22 +41,26 @@ export default class Stats extends Component {
   render() {
     let tempSymbol = this.state.showTemperatureInCelsius ? '\xB0C' : '\xB0F';
     return (
-      <div className='stats' onClick={this.toggleCelsius}>
+      <div className='stats'>
         <div className='stats-row-header'>
-          <p className='stats-column'>PROBE ID</p>
-          <p className='stats-column'>CURRENT TEMP ({tempSymbol})</p>
-          <p className='stats-column'>SET TEMP ({tempSymbol})</p>
-          <p className='stats-column'>POWER %</p>
+          <div className='stats-column'></div> {/* This is a placeholder for the enable/disable button*/}
+          <p onClick={this.toggleCelsius} className='stats-column stats-column-header'>PROBE ID</p>
+          <p onClick={this.toggleCelsius} className='stats-column stats-column-header'>CURRENT TEMP ({tempSymbol})</p>
+          <p onClick={this.toggleCelsius} className='stats-column stats-column-header'>SET TEMP ({tempSymbol})</p>
+          <p onClick={this.toggleCelsius} className='stats-column stats-column-header'>POWER %</p>
         </div>
         {this.state.herpStats.map(stat => {
           const currentTemp = this.state.showTemperatureInCelsius ? this.convertToCelsius(stat.currentTemp) : stat.currentTemp;
           const setTemp = this.state.showTemperatureInCelsius ? this.convertToCelsius(stat.setTemp) : stat.setTemp;
           return (
               <div className='stats-row' key={stat.probeId}>
-                <p className='stats-column'>#{stat.probeId}</p>
-                <p className='stats-column'>{currentTemp.toFixed(1)}{tempSymbol}</p>
-                <p className='stats-column'>({setTemp.toFixed(1)}{tempSymbol})</p>
-                <p className='stats-column'>{stat.powerPercentage}%</p>
+                <div className='stats-column'>
+                  <Button extraClasses={`stats-button-${stat.powerStatus}`} text={stat.powerStatus} />
+                </div>
+                <p onClick={this.toggleCelsius} className='stats-column stats-column-copy'>#{stat.probeId}</p>
+                <p onClick={this.toggleCelsius} className='stats-column stats-column-copy'>{currentTemp.toFixed(1)}{tempSymbol}</p>
+                <p onClick={this.toggleCelsius} className='stats-column stats-column-copy'>({setTemp.toFixed(1)}{tempSymbol})</p>
+                <p onClick={this.toggleCelsius} className='stats-column stats-column-copy'>{stat.powerPercentage}%</p>
               </div>
             )
           })

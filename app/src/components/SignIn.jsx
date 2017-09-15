@@ -9,6 +9,7 @@ export default class SignIn extends Component {
   render() {
     const submitWiFiInfo = this.props.submitWiFiInfo;
     const handlePasswordChange = this.props.handlePasswordChange;
+    const handleCloudAuthTokenChange = this.props.handleCloudAuthTokenChange;
     const handleNetworkNameChange = this.props.handleNetworkNameChange;
     const handleSecurityOptionChange = this.props.handleSecurityOptionChange;
     const networkName = this.props.networkName;
@@ -25,15 +26,6 @@ export default class SignIn extends Component {
         }
         <fieldset className='signIn-form'>
           <div className="signIn-form-group">
-            <input
-              placeholder="Network Name (SSID)"
-              className="signIn-form-input"
-              name="network_name"
-              type="input"
-              onChange={(e) => handleNetworkNameChange(e)}
-            />
-          </div>
-          <div className="signIn-form-group">
             <div className="signIn-form-select-wrapper">
               <select
                 placeholder="Security"
@@ -49,6 +41,15 @@ export default class SignIn extends Component {
               </select>
             </div>
           </div>
+          <div className="signIn-form-group">
+            <input
+              placeholder="Network Name (SSID)"
+              className="signIn-form-input"
+              name="network_name"
+              type="input"
+              onChange={(e) => handleNetworkNameChange(e)}
+            />
+          </div>
           {securityOption !== 'None' && securityOption !== null &&
             <div className="signIn-form-group">
               <input
@@ -61,6 +62,16 @@ export default class SignIn extends Component {
               />
             </div>
           }
+          <div className="signIn-form-group">
+            <input
+              placeholder="Cloud Auth Token"
+              className="signIn-form-input"
+              name="cloud_auth_token"
+              type="input"
+              onChange={(e) => handleCloudAuthTokenChange(e)}
+            />
+            <a className='signIn-form-link' href='#'>Get Cloud Auth Token</a>
+          </div>
           <div className='signIn-form-button'>
             <Button text="Connect" onClick={submitWiFiInfo} />
           </div>
