@@ -29,19 +29,14 @@ export default class App extends Component {
 
   togglePower = (id, powerStatus) => {
     const newPowerStatus = powerStatus === "On" ? "Off" : "On";
-    console.log(newPowerStatus);
     const path = `${apiHost}/herpstats/${id}`;
-    debugger;
-    axios.post(path, {
+    axios.patch(path, {
       power_status: newPowerStatus
     }).then(
     res => {
-      debugger;
-      getInfo();
-      console.log(res)
+      this.getInfo();
     }).catch(
     error => {
-      debugger;
       console.error(`There was an error with your request: ${error}`)
     });
   }
