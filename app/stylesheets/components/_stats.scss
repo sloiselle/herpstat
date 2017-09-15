@@ -2,9 +2,6 @@
 	color: black;
 	padding: 20px 0;
 	width: 100%;
-	@media (max-width: 969px) {
-		width: 95%;
-	}
 	cursor: pointer;
 	&-row {
 		&,
@@ -30,7 +27,7 @@
 	&-column {
 		width: 20%;
 		&-copy {
-			padding-top: 20px;
+			padding-top: 15px;
 		}
 	}
 }

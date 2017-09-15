@@ -31,7 +31,7 @@ export default class SignIn extends Component {
                 placeholder="Security"
                 className="signIn-form-select"
                 name="security"
-                value={securityOption}
+                value={securityOption || ""}
                 onChange={(e) => handleSecurityOptionChange(e)}
               >
                 <option value="None">None</option>

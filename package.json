@@ -15,7 +15,8 @@
     "build:prod:stats": "npm run build -- --progress --profile --json > ./dist/stats/stats.json",
     "build": "webpack --config ./webpack/webpack.config.js --env.env=prod",
     "debug:prod": "npm run debug -- --env.env=prod",
-    "debug": "node --inspect-brk ./node_modules/webpack/bin/webpack.js --config ./webpack/webpack.config.js"
+    "debug": "node --inspect-brk ./node_modules/webpack/bin/webpack.js --config ./webpack/webpack.config.js",
+    "api": "json-server --watch mockJson.json --port 3004"
   },
   "devDependencies": {
     "babel-core": "6.25.0",
@@ -40,6 +41,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "core-js": "2.5.0",
+    "json-server": "^0.12.0",
     "react": "15.6.1",
     "react-dom": "15.6.1",
     "url-loader": "^0.5.9"

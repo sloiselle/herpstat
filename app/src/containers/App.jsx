@@ -6,6 +6,8 @@ import Stats from './../components/Stats.jsx';
 import Button from './../components/Button.jsx';
 import axios from 'axios';
 
+const apiHost = 'http://localhost:3004'
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -16,52 +18,89 @@ export default class App extends Component {
       password: null,
       cloudAuthToken: null,
       showErrors: false,
-      timeUntilRefresh: 0,
-      refreshDelay: 10
+      herpstats: []
     }
   }
 
   componentDidMount() {
     this.getWifiInfo();
-    this.refreshInfo();
+    this.getInfo();
+  }
+
+  togglePower = (id, powerStatus) => {
+    const newPowerStatus = powerStatus === "On" ? "Off" : "On";
+    console.log(newPowerStatus);
+    const path = `${apiHost}/herpstats/${id}`;
+    debugger;
+    axios.post(path, {
+      power_status: newPowerStatus
+    }).then(
+    res => {
+      debugger;
+      getInfo();
+      console.log(res)
+    }).catch(
+    error => {
+      debugger;
+      console.error(`There was an error with your request: ${error}`)
+    });
   }
 
   submitWiFiInfo = () => {
     if (this.state.networkName === null || this.state.cloudAuthToken === null || (this.state.securityOption !== 'None' && this.state.securityOption !== null && !this.state.password)) {
       this.setState({showErrors: true})
     } else {
-      // TODO Insert POST here
-      // On success, set this.state.isConnected: true
-      this.setState({isConnected: true})
-      // On fail, set this.state.showErrors: true
-      console.log(`SSID: ${this.state.networkName} Security Option: ${this.state.securityOption} Password: ${this.state.password}`);
+      axios.post(`${apiHost}/wifi`, {
+        network_name: this.state.networkName,
+        security_option: this.state.securityOption,
+        password: this.state.password,
+        cloud_auth_token: this.state.cloudAuthToken
+      }).then(
+      res => {
+        this.setState({isConnected: true})
+      }).catch(
+      error => {
+        this.setState({showErrors: true})
+      });
     }
   }
 
   resetWifiInfo = () => {
-    this.setState({isConnected: false})
+    this.setState({
+      isConnected: false,
+      networkName: null,
+      securityOption: null,
+      password: null,
+      cloudAuthToken: null,
+    })
   }
 
   getInfo = () => {
-    console.log('Refreshing Herpstat...'); // TODO Get herpstat info
-    // axios.get();
+    console.log('Refreshing Herpstat...');
+    axios.get(`${apiHost}/herpstats`).then(
+      res => {
+        const herpstats = res.data;
+        this.setState({herpstats: herpstats})
+      }
+    )
   }
 
   getWifiInfo = () => {
-    console.log('Getting Wifi...'); // TODO Get wifi info
-    // axios.get();
-  }
-
-  refreshInfo = () => {
-    if (this.state.isConnected) {
-      if (this.state.timeUntilRefresh > 1) {
-        this.setState({timeUntilRefresh: this.state.timeUntilRefresh - 1})
-      } else {
-        this.getInfo();
-        this.setState({timeUntilRefresh: this.state.refreshDelay});
+    console.log('Getting Wifi...');
+    axios.get(`${apiHost}/wifi`).then(
+      res => {
+        const wifiSettings = res.data;
+        if (wifiSettings.network_name !== null && wifiSettings.cloud_auth_token !== null) {
+          this.setState({
+            isConnected: true,
+            networkName: wifiSettings.network_name,
+            password: wifiSettings.password,
+            securityOption: wifiSettings.security_option,
+            cloudAuthToken: wifiSettings.cloudAuthToken
+          })
+        }
       }
-    }
-    setTimeout(() => this.refreshInfo(), 1000);
+    );
   }
 
   handleNetworkNameChange = (e) => {
@@ -87,6 +126,8 @@ export default class App extends Component {
           networkName={this.state.networkName}
           isConnected={this.state.isConnected}
           timeUntilRefresh={this.state.timeUntilRefresh}
+          isConnected={this.state.isConnected}
+          getInfo={this.getInfo}
         />
         {!this.state.isConnected &&
           <div style={{width: '100%'}}>
@@ -104,7 +145,7 @@ export default class App extends Component {
         }
         {this.state.isConnected &&
           <div className="app-container-stats-wrapper">
-            <Stats />
+            <Stats apiHost={apiHost} togglePower={this.togglePower} herpStats={this.state.herpstats}/>
             <Button extraClasses="app-container-resetWifiButton" text="Reset WiFi Settings" onClick={this.resetWifiInfo} />
           </div>
         }

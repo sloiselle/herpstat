@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import Button from './../components/Button.jsx';
 
 export default class Stats extends Component {
@@ -6,31 +7,8 @@ export default class Stats extends Component {
     super(props);
     this.state = {
       showTemperatureInCelsius: false,
-      herpStats: [
-        {
-          powerStatus: 'On',
-          probeId: 1,
-          currentTemp: 70,
-          setTemp: 45.5,
-          powerPercentage: 100
-        },
-        {
-          powerStatus: 'Off',
-          probeId: 2,
-          currentTemp: 55,
-          setTemp: 45.5,
-          powerPercentage: 100
-        },
-      ]
     }
   }
-
-  // componentDidMount() {
-  //   axios.get(``).then(res => { // insert path to herpStats JSON here
-  //     const stats = res.data.data.children.map(obj => obj.data);
-  //     this.setState({ herpStats })
-  //   }); 
-  // }
 
   toggleCelsius = () => {
     this.setState({showTemperatureInCelsius: !this.state.showTemperatureInCelsius});
@@ -49,18 +27,18 @@ export default class Stats extends Component {
           <p onClick={this.toggleCelsius} className='stats-column stats-column-header'>SET TEMP ({tempSymbol})</p>
           <p onClick={this.toggleCelsius} className='stats-column stats-column-header'>POWER %</p>
         </div>
-        {this.state.herpStats.map(stat => {
-          const currentTemp = this.state.showTemperatureInCelsius ? this.convertToCelsius(stat.currentTemp) : stat.currentTemp;
-          const setTemp = this.state.showTemperatureInCelsius ? this.convertToCelsius(stat.setTemp) : stat.setTemp;
+        {this.props.herpStats.map(stat => {
+          const currentTemp = this.state.showTemperatureInCelsius ? this.convertToCelsius(stat.current_temp) : stat.current_temp;
+          const setTemp = this.state.showTemperatureInCelsius ? this.convertToCelsius(stat.set_temp) : stat.set_temp;
           return (
-              <div className='stats-row' key={stat.probeId}>
+              <div className='stats-row' key={stat.id}>
                 <div className='stats-column'>
-                  <Button extraClasses={`stats-button-${stat.powerStatus}`} text={stat.powerStatus} />
+                  <Button onClick={(e) => this.props.togglePower(stat.id, stat.power_status)} extraClasses={`stats-button-${stat.power_status}`} text={stat.power_status} />
                 </div>
-                <p onClick={this.toggleCelsius} className='stats-column stats-column-copy'>#{stat.probeId}</p>
+                <p onClick={this.toggleCelsius} className='stats-column stats-column-copy'>#{stat.id}</p>
                 <p onClick={this.toggleCelsius} className='stats-column stats-column-copy'>{currentTemp.toFixed(1)}{tempSymbol}</p>
                 <p onClick={this.toggleCelsius} className='stats-column stats-column-copy'>({setTemp.toFixed(1)}{tempSymbol})</p>
-                <p onClick={this.toggleCelsius} className='stats-column stats-column-copy'>{stat.powerPercentage}%</p>
+                <p onClick={this.toggleCelsius} className='stats-column stats-column-copy'>{stat.power_percentage}%</p>
               </div>
             )
           })
@@ -68,4 +46,8 @@ export default class Stats extends Component {
       </div>
     );
   }
+}
+
+Stats.defaultProps = {
+  herpStats: []
 }
