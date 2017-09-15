@@ -1,0 +1,38 @@
+{
+  "wifi": {
+    "network_name": null,
+    "security_option": null,
+    "password": null,
+    "cloud_auth_token": null
+  },
+  "herpstats": [
+    {
+      "id": 1,
+      "power_status": "On",
+      "set_temp": 20,
+      "current_temp": 33,
+      "power_percentage": 100
+    },
+    {
+      "id": 2,
+      "power_status": "On",
+      "set_temp": 50,
+      "current_temp": 80,
+      "power_percentage": 20
+    },
+    {
+      "id": 3,
+      "power_status": "On",
+      "set_temp": 10,
+      "current_temp": 33,
+      "power_percentage": 88
+    },
+    {
+      "id": 4,
+      "power_status": "Off",
+      "set_temp": 33,
+      "current_temp": 50,
+      "power_percentage": 100
+    }
+  ]
+}
