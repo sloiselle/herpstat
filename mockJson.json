@@ -5,6 +5,9 @@
     "password": null,
     "cloud_auth_token": "fff"
   },
+  "circuitBreaker": {
+    "enabled": true
+  },
   "herpstats": [
     {
       "id": 1,
@@ -15,7 +18,7 @@
     },
     {
       "id": 2,
-      "power_status": "On",
+      "power_status": "Off",
       "set_temp": 50,
       "current_temp": 80,
       "power_percentage": 20

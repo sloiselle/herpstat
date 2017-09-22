@@ -13,8 +13,12 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    &-resetWifiButton.rc-button {
+    &-resetWifiButton.rc-button,
+    &-killswitch.rc-button {
 			width: 100%;
+		}
+		&-killswitch.rc-button {
+			margin-top: 10px;
 		}
 		&-stats-wrapper {
 			display: flex;

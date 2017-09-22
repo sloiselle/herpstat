@@ -18,7 +18,8 @@ export default class App extends Component {
       password: null,
       cloudAuthToken: null,
       showErrors: false,
-      herpstats: []
+      herpstats: [],
+      circuitBreakerOn: false
     }
   }
 
@@ -66,16 +67,34 @@ export default class App extends Component {
       networkName: null,
       securityOption: null,
       password: null,
-      cloudAuthToken: null,
+      cloudAuthToken: null
     })
+  }
+
+  toggleCircuitBreaker = () => {
+    axios.patch(`${apiHost}/circuitBreaker`, {
+        enabled: !this.state.circuitBreakerOn
+      }).then(
+      res => {
+        this.getInfo();
+      }).catch(
+      error => {
+        console.error(`There was an error with your request: ${error}`);
+      });
   }
 
   getInfo = () => {
     console.log('Refreshing Herpstat...');
+    axios.get(`${apiHost}/circuitBreaker`).then(
+      res => {
+        const circuitBreakerOn = res.data.enabled;
+        this.setState({circuitBreakerOn})
+      }
+    )
     axios.get(`${apiHost}/herpstats`).then(
       res => {
         const herpstats = res.data;
-        this.setState({herpstats: herpstats})
+        this.setState({herpstats});
       }
     )
   }
@@ -140,8 +159,13 @@ export default class App extends Component {
         }
         {this.state.isConnected &&
           <div className="app-container-stats-wrapper">
-            <Stats apiHost={apiHost} togglePower={this.togglePower} herpStats={this.state.herpstats}/>
+            <Stats apiHost={apiHost} togglePower={this.togglePower} circuitBreakerOn={this.state.circuitBreakerOn} herpStats={this.state.herpstats}/>
             <Button extraClasses="app-container-resetWifiButton" text="Reset WiFi Settings" onClick={this.resetWifiInfo} />
+            <Button 
+              extraClasses={`app-container-killswitch stats-button-${this.state.circuitBreakerOn ? "On" : "Off"}`}
+              text={`All ${this.state.circuitBreakerOn ? 'On' : 'Off'}`}
+              onClick={this.toggleCircuitBreaker}
+            />
           </div>
         }
       </div>

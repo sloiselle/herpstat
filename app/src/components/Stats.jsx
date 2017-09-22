@@ -33,7 +33,11 @@ export default class Stats extends Component {
           return (
               <div className='stats-row' key={stat.id}>
                 <div className='stats-column'>
-                  <Button onClick={(e) => this.props.togglePower(stat.id, stat.power_status)} extraClasses={`stats-button-${stat.power_status}`} text={stat.power_status} />
+                  <Button 
+                    onClick={(e) => this.props.togglePower(stat.id, stat.power_status)}
+                    extraClasses={this.props.circuitBreakerOn ? `stats-button-${stat.power_status}` : 'stats-button-Off'}
+                    text={this.props.circuitBreakerOn ? stat.power_status : "Off"}
+                  />
                 </div>
                 <p onClick={this.toggleCelsius} className='stats-column stats-column-copy'>#{stat.id}</p>
                 <p onClick={this.toggleCelsius} className='stats-column stats-column-copy'>{currentTemp.toFixed(1)}{tempSymbol}</p>
@@ -49,5 +53,6 @@ export default class Stats extends Component {
 }
 
 Stats.defaultProps = {
-  herpStats: []
+  herpStats: [],
+  circuitBreakerOn: true
 }
