@@ -1,9 +1,9 @@
 {
   "wifi": {
-    "network_name": "fff",
+    "network_name": null,
     "security_option": null,
     "password": null,
-    "cloud_auth_token": "fff"
+    "cloud_auth_token": null
   },
   "circuitBreaker": {
     "enabled": true
