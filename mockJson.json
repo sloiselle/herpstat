@@ -1,9 +1,9 @@
 {
   "wifi": {
-    "network_name": null,
+    "network_name": "fff",
     "security_option": null,
     "password": null,
-    "cloud_auth_token": null
+    "cloud_auth_token": "fff"
   },
   "herpstats": [
     {
