@@ -53,7 +53,8 @@ export default class App extends Component {
         cloud_auth_token: this.state.cloudAuthToken
       }).then(
       res => {
-        this.setState({isConnected: true})
+        this.setState({isConnected: true});
+        this.getInfo();
       }).catch(
       error => {
         this.setState({showErrors: true})
@@ -84,19 +85,21 @@ export default class App extends Component {
   }
 
   getInfo = () => {
-    console.log('Refreshing Herpstat...');
-    axios.get(`${apiHost}/circuitBreaker`).then(
-      res => {
-        const circuitBreakerOn = res.data.enabled;
-        this.setState({circuitBreakerOn})
-      }
-    )
-    axios.get(`${apiHost}/herpstats`).then(
-      res => {
-        const herpstats = res.data;
-        this.setState({herpstats});
-      }
-    )
+    if (this.state.isConnected) {
+      console.log('Refreshing Herpstat...');
+      axios.get(`${apiHost}/circuitBreaker`).then(
+        res => {
+          const circuitBreakerOn = res.data.enabled;
+          this.setState({circuitBreakerOn})
+        }
+      )
+      axios.get(`${apiHost}/herpstats`).then(
+        res => {
+          const herpstats = res.data;
+          this.setState({herpstats});
+        }
+      )
+    }
   }
 
   getWifiInfo = () => {
