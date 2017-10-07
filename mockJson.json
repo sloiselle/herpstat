@@ -1,9 +1,9 @@
 {
   "wifi": {
-    "network_name": null,
-    "security_option": null,
-    "password": null,
-    "cloud_auth_token": null
+    "network_name": "bananas",
+    "security_option": "WPA/WPA2 Personal",
+    "password": "jifjfj",
+    "cloud_auth_token": "meow"
   },
   "circuitBreaker": {
     "enabled": true
@@ -13,28 +13,32 @@
       "id": 1,
       "power_status": "On",
       "set_temp": 20,
-      "current_temp": 33,
+      "max_value": 33,
+      "min_value": 20,
       "power_percentage": 100
     },
     {
       "id": 2,
       "power_status": "Off",
-      "set_temp": 50,
-      "current_temp": 80,
+      "set_temp": 1,
+      "max_value": 34,
+      "min_value": 20,
       "power_percentage": 20
     },
     {
       "id": 3,
       "power_status": "On",
       "set_temp": 10,
-      "current_temp": 33,
+      "max_value": 33,
+      "min_value": 20,
       "power_percentage": 88
     },
     {
       "id": 4,
       "power_status": "Off",
       "set_temp": 33,
-      "current_temp": 50,
+      "max_value": 33,
+      "min_value": 20,
       "power_percentage": 100
     }
   ]

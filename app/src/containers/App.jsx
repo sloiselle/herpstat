@@ -19,7 +19,9 @@ export default class App extends Component {
       cloudAuthToken: null,
       showErrors: false,
       herpstats: [],
-      circuitBreakerOn: false
+      circuitBreakerOn: false,
+      showAreYouSureWiFiButton: false,
+      showAreYouSureToggleButton: false
     }
   }
 
@@ -68,7 +70,8 @@ export default class App extends Component {
       networkName: null,
       securityOption: null,
       password: null,
-      cloudAuthToken: null
+      cloudAuthToken: null,
+      showAreYouSureWiFiButton: false
     })
   }
 
@@ -78,6 +81,7 @@ export default class App extends Component {
       }).then(
       res => {
         this.getInfo();
+        this.setState({showAreYouSureToggleButton: false})
       }).catch(
       error => {
         console.error(`There was an error with your request: ${error}`);
@@ -136,6 +140,16 @@ export default class App extends Component {
     this.setState({cloudAuthToken: e.target.value, showErrors: false})
   }
 
+  showAreYouSureWiFiButton = () => {
+    this.setState({showAreYouSureWiFiButton: true});
+    setTimeout(() => this.setState({showAreYouSureWiFiButton: false}), 3000);
+  }
+
+  showAreYouSureToggleButton = () => {
+    this.setState({showAreYouSureToggleButton: true});
+    setTimeout(() => this.setState({showAreYouSureToggleButton: false}), 3000);
+  }
+
   render() {
     return (
       <div className="app-container">
@@ -163,12 +177,34 @@ export default class App extends Component {
         {this.state.isConnected &&
           <div className="app-container-stats-wrapper">
             <Stats apiHost={apiHost} togglePower={this.togglePower} circuitBreakerOn={this.state.circuitBreakerOn} herpStats={this.state.herpstats}/>
-            <Button extraClasses="app-container-resetWifiButton" text="Reset WiFi Settings" onClick={this.resetWifiInfo} />
-            <Button 
-              extraClasses={`app-container-killswitch stats-button-${this.state.circuitBreakerOn ? "On" : "Off"}`}
-              text={`All ${this.state.circuitBreakerOn ? 'On' : 'Off'}`}
-              onClick={this.toggleCircuitBreaker}
-            />
+            {this.state.showAreYouSureWiFiButton &&
+              <Button
+                extraClasses="fullWidth app-container-resetWifiButton"
+                text="Are you sure you want to reset your WiFi settings?"
+                onClick={this.resetWifiInfo}
+              />
+            }
+            {this.state.showAreYouSureToggleButton &&
+              <Button 
+                extraClasses={`fullWidth app-container-killswitch stats-button-${!this.state.circuitBreakerOn ? "On" : "Off"}`}
+                text={`Would you like to turn all probes ${!this.state.circuitBreakerOn ? 'on' : 'off'}?`}
+                onClick={this.toggleCircuitBreaker}
+              />
+            }
+            {!this.state.showAreYouSureToggleButton && !this.state.showAreYouSureWiFiButton &&
+              <div className='app-container-buttonWrapper'>
+                <Button
+                  extraClasses="app-container-resetWifiButton"
+                  text="Reset WiFi Settings"
+                  onClick={this.showAreYouSureWiFiButton}
+                />
+                <Button 
+                  extraClasses={`app-container-killswitch stats-button-${this.state.circuitBreakerOn ? "On" : "Off"}`}
+                  text={`All ${this.state.circuitBreakerOn ? 'On' : 'Off'}`}
+                  onClick={this.showAreYouSureToggleButton}
+                />
+              </div>
+            }
           </div>
         }
       </div>

@@ -21,14 +21,15 @@ export default class Stats extends Component {
     return (
       <div className='stats'>
         <div className='stats-row-header'>
-          <div className='stats-column'></div> {/* This is a placeholder for the enable/disable button*/}
+          <div className='stats-column'></div>
           <p onClick={this.toggleCelsius} className='stats-column stats-column-header'>PROBE ID</p>
-          <p onClick={this.toggleCelsius} className='stats-column stats-column-header'>CURRENT TEMP ({tempSymbol})</p>
-          <p onClick={this.toggleCelsius} className='stats-column stats-column-header'>SET TEMP ({tempSymbol})</p>
+          <p onClick={this.toggleCelsius} className='stats-column stats-column-header'>TEMP HI/LO({tempSymbol})</p>
+          <p onClick={this.toggleCelsius} className='stats-column stats-column-header'>SET TEMP({tempSymbol})</p>
           <p onClick={this.toggleCelsius} className='stats-column stats-column-header'>POWER %</p>
         </div>
         {this.props.herpStats.map(stat => {
-          const currentTemp = this.state.showTemperatureInCelsius ? this.convertToCelsius(stat.current_temp) : stat.current_temp;
+          const maxTemp = this.state.showTemperatureInCelsius ? this.convertToCelsius(stat.max_value) : stat.max_value;
+          const minTemp = this.state.showTemperatureInCelsius ? this.convertToCelsius(stat.min_value) : stat.min_value;
           const setTemp = this.state.showTemperatureInCelsius ? this.convertToCelsius(stat.set_temp) : stat.set_temp;
           return (
               <div className='stats-row' key={stat.id}>
@@ -40,7 +41,7 @@ export default class Stats extends Component {
                   />
                 </div>
                 <p onClick={this.toggleCelsius} className='stats-column stats-column-copy'>#{stat.id}</p>
-                <p onClick={this.toggleCelsius} className='stats-column stats-column-copy'>{currentTemp.toFixed(1)}{tempSymbol}</p>
+                <p onClick={this.toggleCelsius} className='stats-column stats-column-copy'>{maxTemp.toFixed(1)} / {minTemp.toFixed(1)}{tempSymbol}</p>
                 <p onClick={this.toggleCelsius} className='stats-column stats-column-copy'>({setTemp.toFixed(1)}{tempSymbol})</p>
                 <p onClick={this.toggleCelsius} className='stats-column stats-column-copy'>{stat.power_percentage}%</p>
               </div>

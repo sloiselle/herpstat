@@ -5,7 +5,7 @@ export default class StatusBar extends Component {
     super(props);
     this.state = {
       timeUntilRefresh: 0,
-      refreshDelay: 10
+      refreshDelay: 30
     }
   }
   componentDidMount() {
